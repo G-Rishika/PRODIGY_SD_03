@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Management System</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { margin: 5px 0; padding: 8px; width: 100%; }
+    .contact { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Simple Contact Management System</h1>
+
+  <h3>Add / Edit Contact</h3>
+  <input type="text" id="name" placeholder="Name">
+  <input type="text" id="phone" placeholder="Phone Number">
+  <input type="email" id="email" placeholder="Email">
+  <input type="hidden" id="editIndex">
+  <button onclick="saveContact()">Save Contact</button>
+
+  <h3>Contact List</h3>
+  <div id="contactList"></div>
+
+  <script>
+    let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+    function renderContacts() {
+      const list = document.getElementById("contactList");
+      list.innerHTML = "";
+      contacts.forEach((c, i) => {
+        list.innerHTML += `
+          <div class="contact">
+            <strong>${c.name}</strong><br>
+            Phone: ${c.phone}<br>
+            Email: ${c.email}<br>
+            <button onclick="editContact(${i})">Edit</button>
+            <button onclick="deleteContact(${i})">Delete</button>
+          </div>
+        `;
+      });
+    }
+
+    function saveContact() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      const editIndex = document.getElementById("editIndex").value;
+
+      if (name && phone && email) {
+        const contact = { name, phone, email };
+        if (editIndex) {
+          contacts[editIndex] = contact;
+          document.getElementById("editIndex").value = "";
+        } else {
+          contacts.push(contact);
+        }
+        localStorage.setItem("contacts", JSON.stringify(contacts));
+        clearForm();
+        renderContacts();
+      } else {
+        alert("Please fill all fields.");
+      }
+    }
+
+    function editContact(index) {
+      const contact = contacts[index];
+      document.getElementById("name").value = contact.name;
+      document.getElementById("phone").value = contact.phone;
+      document.getElementById("email").value = contact.email;
+      document.getElementById("editIndex").value = index;
+    }
+
+    function deleteContact(index) {
+      if (confirm("Delete this contact?")) {
+        contacts.splice(index, 1);
+        localStorage.setItem("contacts", JSON.stringify(contacts));
+        renderContacts();
+      }
+    }
+
+    function clearForm() {
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("email").value = "";
+    }
+
+    renderContacts();
+  </script>
+</body>
+</html>
 
