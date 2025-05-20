@@ -1,0 +1,16 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+input, button {
+  margin: 5px 0;
+  padding: 8px;
+  width: 100%;
+}
+
+.contact {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+}
