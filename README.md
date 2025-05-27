@@ -34,5 +34,5 @@ Learning Outcomes
   Developed a clear understanding of project structure and user interface design.
 
 Created by 
-  Rishika G
+  Rishika G,
   B.Sc Computer Science with Artificial Intelligence 
